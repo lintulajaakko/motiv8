@@ -1,15 +1,78 @@
 import "../global.css";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
+import Card from "@/components/card";
+import { View, ScrollView, SectionList } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
+import ThemedText from "@/components/themed-text";
 
-import { Text, View } from "react-native";
-import HomeTab from "./tabs/home";
-
-export default function Index() {
+function CheckIcon() {
   return (
-    <View className="flex-1 items-center justify-center bg-black">
-      <HomeTab />
-      <Text className="text-xl font-bold text-blue-500">
-        Welcome to Nativewind!
-      </Text>
+    <Ionicons name="checkmark-circle-outline" size={24} className="mr-4 text-brand-800" />
+  );
+}
+
+//points card component which displays user's daily and total points
+function PointsCard() {
+  return (
+    <Card className="m-4" title="Points Summary">
+      <View className="flex flex-row justify-between items-center">
+        <View>
+          <ThemedText className="text-lg font-bold text-brand-900">Daily Points</ThemedText>
+          <ThemedText className="text-2xl font-bold text-neutral-900">125</ThemedText>
+        </View>
+        <View>
+          <ThemedText className="text-lg font-bold text-brand-900">Total Points</ThemedText>
+          <ThemedText className="text-2xl font-bold text-neutral-900">1,250</ThemedText>
+        </View>
+      </View>
+    </Card>
+  );
+}
+
+//type def for task item
+type TaskItem = {
+  id: string;
+  title: string;
+  points: number;
+  completed: boolean;
+};
+
+//home view for the app, it has three main sections: greeting, stats summary and quick actions
+
+function TaskRow({ task }: { task: TaskItem }) {
+  return (
+    <View className="p-4 flex flex-row items-center">
+      <CheckIcon />
+      <ThemedText className="text-neutral-900">{task.title}</ThemedText>
+      <View className="flex-1" />
+      <View className="flex flex-row items-center bg-yellow-100 px-2 py-1 rounded-md">
+        <Ionicons name="star" size={16} className="text-yellow-600 mr-1" />
+        <ThemedText className="text-yellow-800 font-semibold">{task.points}</ThemedText>
+      </View>
     </View>
+  );
+}
+
+
+export default function Home() {
+  const router = useRouter();
+  return (
+      <ScrollView className="bg-neutral-0 flex-1 w-full">
+        <PointsCard />
+        <Card className="mx-4 my-0" title="Your Tasks" buttonTitle="New Task">
+          <SectionList
+            sections={[
+              { title: "Today", data: [{ id: "1", title: "Task A", points: 10, completed: false }, { id: "2", title: "Task B", points: 5, completed: false }] },
+              { title: "Tomorrow", data: [{ id: "3", title: "Task C", points: 15, completed: false }] },
+            ]}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => <TaskRow task={item} />}
+            renderSectionHeader={({ section: { title } }) => (
+              <ThemedText className="bg-brand-100 px-4 py-2 font-bold text-brand-900 rounded-sm">{title}</ThemedText>
+            )}
+          />
+        </Card>
+      </ScrollView>
   );
 }
