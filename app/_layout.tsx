@@ -26,7 +26,7 @@ export default function RootLayout() {
   const primaryColor = colors.brand[500];
   const accentColor = colors.brand[800];
   const tabBarBg = colors.brand[50]
-  const headerBg = colors.neutral[50]
+  const headerBg = colors.neutral[0]
 
 
   return (

@@ -12,18 +12,31 @@ function CheckIcon() {
   );
 }
 
-//points card component which displays user's daily and total points
+//points card component which displays user's daily and total points and compares them to previous month
+
+
+
 function PointsCard() {
   return (
-    <Card className="m-4" title="Points Summary">
-      <View className="flex flex-row justify-between items-center">
-        <View>
-          <ThemedText className="text-lg font-bold text-brand-900">Daily Points</ThemedText>
-          <ThemedText className="text-2xl font-bold text-neutral-900">125</ThemedText>
+    <Card className="m-4" title="Points Summary" titleIcon={<Ionicons name="trophy" size={24} className="text-yellow-600 mr-2" />} >
+      <View className="p-2">
+        <View className="flex flex-row justify-between items-center mb-4">
+          <View>
+            <ThemedText className="text-default-font font-semibold text-lg">Today's Points</ThemedText>
+            <ThemedText className="text-3xl font-bold text-brand-800">150</ThemedText>
+          </View>
+          <View className="flex items-center justify-center">
+            <ThemedText className="text-subtext-color">+15% from yesterday</ThemedText>
+          </View>
         </View>
-        <View>
-          <ThemedText className="text-lg font-bold text-brand-900">Total Points</ThemedText>
-          <ThemedText className="text-2xl font-bold text-neutral-900">1,250</ThemedText>
+        <View className="flex flex-row justify-between items-center">
+          <View>
+            <ThemedText className="text-default-font font-semibold text-lg">Total Points</ThemedText>
+            <ThemedText className="text-3xl font-bold text-yellow-600">3,450</ThemedText>
+          </View>
+          <View className="flex items-center justify-center">
+            <ThemedText className="text-subtext-color">+10% from last month</ThemedText>
+          </View>
         </View>
       </View>
     </Card>
@@ -60,7 +73,7 @@ export default function Home() {
   return (
       <ScrollView className="bg-neutral-0 flex-1 w-full">
         <PointsCard />
-        <Card className="mx-4 my-0" title="Your Tasks" buttonTitle="New Task">
+        <Card className="mx-4 my-0 mb-4" title="Your Tasks" buttonTitle="New Task" titleIcon={<Ionicons name="receipt-outline" size={24} className="text-brand-800 mr-2" />} onPress={() => router.push("/new-task")}>
           <SectionList
             sections={[
               { title: "Today", data: [{ id: "1", title: "Task A", points: 10, completed: false }, { id: "2", title: "Task B", points: 5, completed: false }] },
