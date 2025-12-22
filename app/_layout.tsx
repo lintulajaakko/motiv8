@@ -1,13 +1,14 @@
 import "../global.css";
 import tailwindConfig from "../tailwind.config"
 import { Ionicons } from '@expo/vector-icons';
-
+import Toast from 'react-native-toast-message';
 
 import { Stack, Tabs } from "expo-router";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import  { useFonts } from 'expo-font';
+import ThemedToast from "@/components/toast";
 
 
 
@@ -45,6 +46,7 @@ export default function RootLayout() {
         <Tabs.Screen name="index" options={{ title: "Home" }} />
         <Tabs.Screen name="profile" options={{ title: "Profile" }} />
       </Tabs>
+      <ThemedToast />
     </View>
   );
 }

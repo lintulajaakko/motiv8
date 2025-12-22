@@ -5,7 +5,7 @@ import Card from "@/components/card";
 import { View, ScrollView, SectionList, Modal, TouchableOpacity, TextInput } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import ThemedText from "@/components/themed-text";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function CheckIcon() {
   return (
@@ -75,7 +75,6 @@ export default function Home() {
   const router = useRouter();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
 
   function AddTaskModalContent() {
     return (
