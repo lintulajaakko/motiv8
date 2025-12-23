@@ -24,7 +24,6 @@ const toastConfig = {
   success: ({ text1, text2, props }: { text1?: string; text2?: string; props?: any }) => (
     
     <View style={{ ...baseStyle, backgroundColor: successBg } as ViewStyle}>
-      <BaseToast text1={text1} text2={text2}  />
       <ThemedText className='text-default-font font-bold text-2xl'>
         {text1}
       </ThemedText>
