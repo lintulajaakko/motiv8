@@ -6,6 +6,7 @@ import { View, ScrollView, SectionList, Modal, TouchableOpacity, TextInput } fro
 import { Ionicons } from '@expo/vector-icons';
 import ThemedText from "@/components/themed-text";
 import { useEffect, useState } from "react";
+import PointsCard from "@/components/pointsCard";
 
 function CheckIcon() {
   return (
@@ -17,32 +18,6 @@ function CheckIcon() {
 
 
 
-function PointsCard() {
-  return (
-    <Card className="m-4" title="Points Summary" titleIcon={<Ionicons name="trophy" size={24} className="text-yellow-600 mr-2" />} >
-      <View className="p-2">
-        <View className="flex flex-row justify-between items-center mb-4">
-          <View>
-            <ThemedText className="text-default-font font-semibold text-lg">Today's Points</ThemedText>
-            <ThemedText className="text-3xl font-bold text-brand-800">150</ThemedText>
-          </View>
-          <View className="flex items-center justify-center">
-            <ThemedText className="text-subtext-color">+15% from yesterday</ThemedText>
-          </View>
-        </View>
-        <View className="flex flex-row justify-between items-center">
-          <View>
-            <ThemedText className="text-default-font font-semibold text-lg">Total Points</ThemedText>
-            <ThemedText className="text-3xl font-bold text-yellow-600">3,450</ThemedText>
-          </View>
-          <View className="flex items-center justify-center">
-            <ThemedText className="text-subtext-color">+10% from last month</ThemedText>
-          </View>
-        </View>
-      </View>
-    </Card>
-  );
-}
 
 //type def for task item
 type TaskItem = {
@@ -102,7 +77,7 @@ export default function Home() {
   }
 
   return (
-    <ScrollView className="bg-neutral-0 flex-1 w-full">
+    <ScrollView className="bg-neutral-950 dark:bg-neutral-0 flex-1 w-full">
       <PointsCard />
       <Card className="mx-4 my-0 mb-4" title="Your Tasks" buttonTitle="New Task" titleIcon={<Ionicons name="receipt-outline" size={24} className="text-brand-800 mr-2" />} onPress={() => setIsModalOpen(true)}>
         <SectionList
