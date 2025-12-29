@@ -77,10 +77,11 @@ export default function Home() {
   }
 
   return (
-    <ScrollView className="bg-neutral-950 dark:bg-neutral-0 flex-1 w-full">
+    
+    <View className="bg-red h-full flex-1 p-safe">
       <PointsCard />
       <Card className="mx-4 my-0 mb-4" title="Your Tasks" buttonTitle="New Task" titleIcon={<Ionicons name="receipt-outline" size={24} className="text-brand-800 mr-2" />} onPress={() => setIsModalOpen(true)}>
-        <SectionList
+        {/*<SectionList
           sections={[
             { title: "Today", data: [{ id: "1", title: "Task A", points: 10, completed: false }, { id: "2", title: "Task B", points: 5, completed: false }] },
             { title: "Tomorrow", data: [{ id: "3", title: "Task C", points: 15, completed: false }] },
@@ -90,11 +91,11 @@ export default function Home() {
           renderSectionHeader={({ section: { title } }) => (
             <ThemedText className="bg-brand-100 px-4 py-2 font-bold text-brand-900 rounded-sm">{title}</ThemedText>
           )}
-        />
+        />*/}
       </Card>
       <Modal visible={isModalOpen} animationType="slide" transparent={true} onRequestClose={() => setIsModalOpen(false)} >
         <AddTaskModalContent />
       </Modal>
-    </ScrollView>
+    </View>
   );
 }
