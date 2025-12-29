@@ -28,7 +28,7 @@ export default function Card({ children, className = "", title = "Placeholder", 
     //only render button if onPress is provided
     const renderButton = onPress ? (
         <View className="border-t border-neutral-200 p-4 flex flex-row justify-end">
-            <Pressable onPress={onPress} className="bg-brand-800 text-brand-50 px-3 py-1 rounded-md">
+            <Pressable onPress={onPress} className="bg-brand-800 text-default-background px-3 py-1 rounded-md">
                 <ThemedText className="text-brand-50">{buttonTitle}</ThemedText>
             </Pressable>
         </View>
