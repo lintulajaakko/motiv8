@@ -14,10 +14,12 @@ export default function GradientCard({ children, colors, className }: GradientCa
    const outerRadius = 14;
 
     return (
-        <View className="overflow-hidden flex-1" style={{ borderRadius: outerRadius }}>
-            <LinearGradient colors={colors || ["#00C9FF", "#92FE9D"]} style={{ padding: 1 }}>
-                <View className={`bg-slate-800  ${className}`} style={{ borderRadius: innerRadius }}>
-                    {children}
+        <View className={`overflow-hidden ${className}`} style={{ borderRadius: outerRadius }} >
+            <LinearGradient className="flex-row" colors={colors || ["#00C9FF", "#92FE9D"]} style={{ padding: 1 }}>
+                <View className="h-full flex-1 bg-slate-800/95 p-3" style={{ borderRadius: innerRadius }}>
+                    <View>
+                        {children}  
+                    </View>
                 </View>
             </LinearGradient>
         

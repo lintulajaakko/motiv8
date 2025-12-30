@@ -6,15 +6,20 @@ import { View, ScrollView, SectionList, Modal, TouchableOpacity, TextInput } fro
 import { Ionicons } from '@expo/vector-icons';
 import ThemedText from "@/components/themed-text";
 import { useEffect, useState } from "react";
-import PointsCard from "@/components/pointsCard";
-import { LinearGradient } from "expo-linear-gradient";
 import GradientCard from "@/components/gradientCard";
+import tailwindConfig from "@/tailwind.config";
 
 function CheckIcon() {
   return (
     <Ionicons name="checkmark-circle-outline" size={24} className="mr-4 text-brand-800" />
   );
 }
+
+
+const colors = tailwindConfig.theme?.extend?.colors as any;
+
+const yellowColor = "#eab308";
+
 
 //points card component which displays user's daily and total points and compares them to previous month
 
@@ -29,48 +34,87 @@ type TaskItem = {
   completed: boolean;
 };
 
-//home view for the app, it has three main sections: greeting, stats summary and quick actions
+//Task Row TODO: move to another file
 
 function TaskRow({ task }: { task: TaskItem }) {
   return (
-    <View className="p-4 flex flex-row items-center">
-      <CheckIcon />
-      <ThemedText className="text-neutral-900">{task.title}</ThemedText>
-      <View className="flex-1" />
-      <View className="flex flex-row items-center bg-yellow-100 px-2 py-1 rounded-md">
-        <Ionicons name="star" size={16} className="text-yellow-600 mr-1" />
-        <ThemedText className="text-yellow-800 font-semibold">{task.points}</ThemedText>
+    //change color based on completion status
+
+    <View className={`flex-row p-4 justify-between items-center mb-3 rounded-2xl border${task.completed ? ' border-brand-800 bg-brand-200/50' : ' border-cyan-700 bg-cyan-950/50'} `}>
+      <View className="flex-row items-center">
+        {task.completed ? <Ionicons name="checkmark-circle-outline" size={24} color={colors.brand[800]} className="mr-4" /> : <Ionicons name="ellipse-outline" size={24} className="mr-4" color={"cyan"}/>}
+        <ThemedText className={`text-lg ${task.completed ? 'line-through text-subtext-color' : 'text-neutral-900'}`}>{task.title}</ThemedText>
+      </View>
+      <View className="border ml-auto flex-row items-center p-2 rounded-lg bg-yellow-700/50 border-yellow-500">
+        <Ionicons name="star" color={yellowColor}/>
+        <ThemedText className="text-yellow-500 ml-1">
+          {task.points}
+          </ThemedText>
       </View>
     </View>
   );
 }
 
-function TodayPointsPanel() {
 
+function TodayPointsCard() {
   return (
-    <View className="flex flex-row gap-6 mb-6">
-
-      <GradientCard className="p-4" colors={["#3F5EFB", "#FC466B"]}>
+    <View className="flex-row mb-6">
+      <GradientCard className="mr-6 flex-1" colors={[yellowColor, "#C5DE37"]}>
         <View className="flex flex-row whitespace-nowrap justify-center items-center">
-          <Ionicons name="star-outline" size={24} className="mr-1" color={"#eab308"}/>
+          <Ionicons name="star-outline" size={24} className="mr-1" color={"#eab308"} />
           <ThemedText className="text-yellow-500 text-2xl">TODAY</ThemedText>
         </View>
         <ThemedText className="text-neutral-900 text-6xl text-center">150</ThemedText>
         <ThemedText className="text-subtext-color text-center text-base">Points</ThemedText>
       </GradientCard>
-      <GradientCard className="p-4 " colors={["#2A7B9B", "#57C785", "#EDDD53"]}>
+      <GradientCard className="flex-1" colors={["#d97706", "#FC466B"]}>
         <View className="flex flex-row whitespace-nowrap justify-center items-center">
-          <Ionicons name="flame-outline" size={24} className="mr-1" color={"#d97706"}/>
+          <Ionicons name="flame-outline" size={24} className="mr-1" color={"#d97706"} />
           <ThemedText className="text-amber-600 text-2xl">STREAK</ThemedText>
         </View>
         <ThemedText className="text-neutral-900 text-6xl text-center">18</ThemedText>
-        <ThemedText className=" text-center text-base text-subtext-color">Days</ThemedText>
+        <ThemedText className="text-center text-base text-subtext-color">Days</ThemedText>
       </GradientCard>
     </View>
-
   );
 }
 
+function TotalScoreCard() {
+  return (
+    <GradientCard className="mb-6" colors={["#8E2DE2", "#4A00E0"]}>
+      <View className="flex flex-row whitespace-nowrap justify-center items-center">
+        <Ionicons name="trophy-outline" size={24} className="mr-1" color={"#8E2DE2"} />
+        <ThemedText className="text-purple-400 text-4xl">TOTAL SCORE</ThemedText>
+      </View>
+      <ThemedText className="text-neutral-900 text-6xl text-center">12,450</ThemedText>
+      <ThemedText className="text-center text-lg text-subtext-color">Points</ThemedText>
+      <View className="flex-row justify-center items-center mt-2">
+        <Ionicons name="trending-up-sharp" color={colors.brand[800]} />
+        <ThemedText className="text-brand-800 ml-2">+ 15% from last month</ThemedText>
+      </View>
+    </GradientCard>
+  );
+}
+
+function TodaysQuestsCard() {
+  const tasks: TaskItem[] = [
+    { id: "1", title: "Complete React Native module", points: 50, completed: false },
+    { id: "2", title: "Workout for 30 minutes", points: 30, completed: true },
+    { id: "3", title: "Read 20 pages of a book", points: 20, completed: false },
+  ];
+
+  return (
+    <GradientCard className="mb-6" colors={["#11998e", "#22d3ee"]}>
+      <View className="flex flex-row whitespace-nowrap justify-center items-center mb-4">
+        <Ionicons name="sparkles-outline" size={24} className="mr-1" color={"cyan"} />
+        <ThemedText className="text-cyan-400 text-4xl">TODAY'S QUESTS</ThemedText>
+      </View>
+      {tasks.map((task) => (
+        <TaskRow key={task.id} task={task} />
+      ))}
+    </GradientCard>
+  );
+}
 
 
 
@@ -107,12 +151,9 @@ export default function Home() {
   return (
     <View className="bg-red h-full flex-1 p-6">
       <ThemedText className="text-5xl text-center mt-6 mb-8 text-brand-800">Quest Board</ThemedText>
-      <TodayPointsPanel />
-      <PointsCard />
-      <Card title="Your Tasks" buttonTitle="New Task" titleIcon={<Ionicons name="receipt-outline" size={24} className="text-brand-800 mr-2" />} onPress={() => setIsModalOpen(true)}>
-
-
-      </Card>
+      <TodayPointsCard />
+      <TotalScoreCard />
+      <TodaysQuestsCard />
       <Modal visible={isModalOpen} animationType="slide" transparent={true} onRequestClose={() => setIsModalOpen(false)} >
         <AddTaskModalContent />
       </Modal>

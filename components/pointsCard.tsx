@@ -46,7 +46,7 @@ export default function PointsCard() {
 
 
   return (
-    <Card className="m-4" title="Points Summary" titleIcon={<Ionicons name="trophy" size={24} className="text-yellow-600 mr-2" />} >
+    <Card title="Points Summary" titleIcon={<Ionicons name="trophy" size={24} className="text-yellow-600 mr-2" />} >
       <View className="p-2">
         <View className="flex flex-row justify-between items-center mb-4">
           <View>
