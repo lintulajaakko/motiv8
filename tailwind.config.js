@@ -2,11 +2,14 @@
 module.exports = {
   // NOTE: Update this to include the paths to all files that contain Nativewind classes.
   content: [
+    "./app/index.tsx",
     "./app/**/*.{js,jsx,ts,tsx}",
     "./components/**/*.{js,jsx,ts,tsx}",
     "./global.css",
   ],
   presets: [require("nativewind/preset")],
+  // use class-based dark mode (apply `.dark` to an ancestor/`html`) so `dark:` utilities work
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -195,4 +198,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+} 
