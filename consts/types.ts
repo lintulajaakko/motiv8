@@ -1,7 +1,3 @@
-export type AppColor = {
-    name: string;
-    value: string;
-}
 
 
 export type User = {

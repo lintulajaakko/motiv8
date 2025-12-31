@@ -15,8 +15,8 @@ export default function GradientCard({ children, colors, className }: GradientCa
 
     return (
         <View className={`overflow-hidden ${className}`} style={{ borderRadius: outerRadius }} >
-            <LinearGradient className="flex-row" colors={colors || ["#00C9FF", "#92FE9D"]} style={{ padding: 1 }}>
-                <View className="h-full flex-1 bg-slate-800/95 p-3" style={{ borderRadius: innerRadius }}>
+            <LinearGradient className="flex-row" end={{ x: 1, y: 0 }} colors={colors || ["#00C9FF", "#92FE9D"]} style={{ padding: 1 }}>
+                <View className="h-full flex-1 bg-slate-800/95 p-6" style={{ borderRadius: innerRadius }}>
                     <View>
                         {children}  
                     </View>

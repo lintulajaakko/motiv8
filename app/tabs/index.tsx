@@ -1,4 +1,3 @@
-import "../global.css";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import Card from "@/components/card";
@@ -8,6 +7,7 @@ import ThemedText from "@/components/themed-text";
 import { useEffect, useState } from "react";
 import GradientCard from "@/components/gradientCard";
 import tailwindConfig from "@/tailwind.config";
+
 
 function CheckIcon() {
   return (
@@ -149,7 +149,7 @@ export default function Home() {
   }
 
   return (
-    <View className="bg-red h-full flex-1 p-6">
+    <ScrollView className="flex-1 p-6">
       <ThemedText className="text-5xl text-center mt-6 mb-8 text-brand-800">Quest Board</ThemedText>
       <TodayPointsCard />
       <TotalScoreCard />
@@ -157,6 +157,6 @@ export default function Home() {
       <Modal visible={isModalOpen} animationType="slide" transparent={true} onRequestClose={() => setIsModalOpen(false)} >
         <AddTaskModalContent />
       </Modal>
-    </View>
+    </ScrollView>
   );
 }
