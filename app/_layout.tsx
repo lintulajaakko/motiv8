@@ -1,25 +1,24 @@
 import "../global.css";
 import tailwindConfig from "../tailwind.config"
-import { Ionicons } from '@expo/vector-icons';
-import Toast from 'react-native-toast-message';
 
-import { Stack, Tabs } from "expo-router";
-import { View, Platform, ScrollView } from "react-native";
+import { Stack } from "expo-router";
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 
 import { useFonts } from 'expo-font';
 import ThemedToast from "@/components/toast";
+import { useEffect, useState } from "react";
+import { getToken } from "@/api/helpers";
+import ThemedText from "@/components/themed-text";
 
 export default function RootLayout() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   const [fontsLoaded] = useFonts({
     'Jersey10-Regular': require('../assets/fonts/Jersey10_Regular/Jersey10-Regular.ttf'),
   });
 
-  if (!fontsLoaded) {
-    return null; // or a loading spinner
-  }
 
   const colors = tailwindConfig.theme?.extend?.colors as any;
 
@@ -28,8 +27,17 @@ export default function RootLayout() {
   const tabBarBg = colors.brand[50];
   const headerBg = colors.neutral[0];
 
-  const isLoggedIn = false; // Replace with actual auth logic
+  useEffect(() => {
+    async function checkToken() {
+      const token = await getToken();
+      setIsLoggedIn(!!token);
+    }
+    checkToken();
+  }, [])
 
+  if(!fontsLoaded || isLoggedIn === null) {
+    return <ThemedText>Loading...</ThemedText>
+  }
 
 
   return (
