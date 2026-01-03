@@ -1,4 +1,4 @@
-import { authApi } from "@/api/auth";
+import { authApi, MAuthRequest } from "@/api/auth";
 import ThemedText from "@/components/themed-text";
 import ThemedButton from "@/components/themedButton";
 import ThemedInput from "@/components/themedInput";
@@ -8,24 +8,27 @@ import { showToast } from "@/components/toast";
 import GradientCard from "@/components/gradientCard";
 import tailwindConfig from "@/tailwind.config";
 import { Ionicons } from "@expo/vector-icons";
+import { AuthRequest } from "expo-auth-session";
 
 const colors = tailwindConfig.theme?.extend?.colors as any;
 
 export default function RegisterTab() {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [username, setUsername] = useState("");
+    const [data, setData] = useState<MAuthRequest>({
+        email: "",
+        password: "",
+        username: ""
+    });
+
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const handleRegister = async () => {
-        // Handle register logic here
-        console.log("Register button pressed");
+        if (data.password !== confirmPassword) {
+            showToast({ alertType: 'error', text1: 'Password Mismatch', text2: 'Please make sure your passwords match.' });
+            return;
+        }
         try {
-            const user = await authApi.register({
-                username: username,
-                email: email,
-                password: password
-            });
+            const user = await authApi.register(data);
             showToast({ alertType: 'success', text1: 'Registration Successful', text2: 'You can now log in.' });
             console.log("Registered user:", user);  
         } catch (error) {
@@ -39,10 +42,10 @@ export default function RegisterTab() {
             <GradientCard colors={["#06b6d4", colors.brand[800]]} >
                 <ThemedText className="text-5xl text-center mb-4 text-brand-800">Start Your Adventure!</ThemedText>
                 <ThemedText className="text-subtext-color text-center mb-6">Please register to continue</ThemedText>
-                <ThemedInput placeholder="Username" icon={<Ionicons name="person-outline" color={"cyan"} size={20} />} value={username} onChangeText={setUsername} className="mb-4"/>
-                <ThemedInput placeholder="Email" inputMode="email" icon={<Ionicons name="mail-outline" color={"cyan"} size={20} />} value={email} onChangeText={setEmail} className="mb-4"/>
-                <ThemedInput placeholder="Password" secureTextEntry={true} icon={<Ionicons name="lock-closed-outline" color={"cyan"} size={20} />} value={password} onChangeText={setPassword} className="mb-4" />
-                <ThemedInput placeholder="Confirm Password" secureTextEntry={true} icon={<Ionicons name="lock-closed-outline" color={"cyan"} size={20} />} className="mb-8"/>
+                <ThemedInput placeholder="Username" icon={<Ionicons name="person-outline" color={"cyan"} size={20} />} value={data.username} onChangeText={(text) => setData({...data, username: text})} className="mb-4"/>
+                <ThemedInput placeholder="Email" inputMode="email" icon={<Ionicons name="mail-outline" color={"cyan"} size={20} />} value={data.email} onChangeText={(text) => setData({...data, email: text})} className="mb-4"/>
+                <ThemedInput placeholder="Password" secureTextEntry={true} icon={<Ionicons name="lock-closed-outline" color={"cyan"} size={20} />} value={data.password} onChangeText={(text) => setData({...data, password: text})} className="mb-4" />
+                <ThemedInput placeholder="Confirm Password" secureTextEntry={true} icon={<Ionicons name="lock-closed-outline" color={"cyan"} size={20} />} className="mb-8" value={confirmPassword} onChangeText={setConfirmPassword}/>
                 <ThemedButton onPress={handleRegister} text="Register" />
             </GradientCard>
         </View>

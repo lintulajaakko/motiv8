@@ -24,16 +24,22 @@ export function useFusionAuth() {
   return { request, response, promptAsync };
 }
 
+export type MAuthRequest = {
+  email: string;
+  password: string;
+  username?: string;
+};
+
 export const authApi = {
-  login(email: string, password: string) {
+  login(data: MAuthRequest) {
     return api("/api/auth/login", {
       method: "POST",
       auth: false,
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify(data),
     });
   },
 
-  register(data: any) {
+  register(data: MAuthRequest) {
     return api("/api/auth/register", {
       method: "POST",
       auth: false,
